@@ -1,3 +1,14 @@
-import React from "react"
+import React from 'react'
+import Globe from '../components/molecules/Globe'
+import NavBar from '../components/molecules/NavBar'
 
-export default () => <div>Hello world!</div>
+const Homepage = () => {
+    return (
+        <div>
+            <NavBar />
+            <Globe />
+        </div>
+    )
+}
+
+export default Homepage

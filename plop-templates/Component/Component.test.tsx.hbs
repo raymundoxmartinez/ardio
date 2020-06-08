@@ -1,0 +1,17 @@
+import * as React from 'react'
+import { render } from '@testing-library/react'
+import chai, { assert } from 'chai'
+import chaiAsPromised from 'chai-as-promised'
+import {{pascalCase name}} from './'
+
+chai.use(chaiAsPromised)
+
+let cleanup: any
+beforeEach(() => (cleanup = require('jsdom-global')()))
+afterEach(() => cleanup())
+describe('Renders {{pascalCase name}}', () => {
+  it('should render the {{pascalCase name}}', () => {
+    const { getByTestId } = render(<{{pascalCase name}}  />)
+    assert.exists(getByTestId(''))
+  })
+})
