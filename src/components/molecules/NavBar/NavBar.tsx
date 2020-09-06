@@ -1,21 +1,38 @@
-import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
-import useStyles from './useStyles'
+import React from "react"
+import useStyles from "./useStyles"
+import clsx from "clsx"
+import { IconButton, AppBar, Toolbar, Button } from "@material-ui/core"
+import { Menu as MenuIcon } from "@material-ui/icons"
 
-const NavBar = () => {
-    const classes = useStyles();
+const NavBar = ({
+  handleDrawerOpen,
+  isDrawerOpen,
+}: {
+  handleDrawerOpen: (event: React.MouseEvent) => void
+  isDrawerOpen: boolean
+}) => {
+  const classes = useStyles()
 
-    return (
-        <div className={classes.root} >
-            <AppBar className={classes.appBar} position="sticky">
-                <Toolbar className={classes.toolBar}>
-                    <Button color="inherit">Login</Button>
-                </Toolbar>
-            </AppBar>
-        </div >
-    );
+  return (
+    <AppBar
+      className={clsx(classes.appBar, {
+        [classes.appBarShift]: isDrawerOpen,
+      })}
+      position="fixed"
+    >
+      <Toolbar className={classes.toolBar}>
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          onClick={handleDrawerOpen}
+          edge="start"
+          className={clsx(classes.menuButton, isDrawerOpen && classes.hide)}
+        >
+          <MenuIcon />
+        </IconButton>
+      </Toolbar>
+    </AppBar>
+  )
 }
 
 export default NavBar

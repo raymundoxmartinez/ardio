@@ -8,26 +8,29 @@ const Cube = () => {
 	}, [])
 
 	function initialize() {
+		debugger
 		const THREE = window.THREE
 		const THREEx = window.THREEx
-		//////////////////////////////////////////////////////////////////////////////////
-		//		Init
-		//////////////////////////////////////////////////////////////////////////////////
-
-		// init renderer
+		debugger
+		// THREEx.ArToolkitContext.baseURL = '../'
 		var renderer = new THREE.WebGLRenderer({
 			antialias: true,
-			alpha: true
+			alpha: true,
+			precision: 'mediump',
 		});
+
+		var clock = new THREE.Clock();
+
+		var mixers = [];
+
+		renderer.setPixelRatio(window.devicePixelRatio);
+
 		renderer.setClearColor(new THREE.Color('lightgrey'), 0)
-		renderer.setSize(640, 480);
+		renderer.setSize(window.innerWidth, window.innerHeight);
 		renderer.domElement.style.position = 'absolute'
 		renderer.domElement.style.top = '0px'
 		renderer.domElement.style.left = '0px'
 		document.body.appendChild(renderer.domElement);
-
-		// array of functions for the rendering loop
-		var onRenderFcts = [];
 
 		// init scene and camera
 		var scene = new THREE.Scene();
@@ -40,32 +43,34 @@ const Cube = () => {
 		var camera = new THREE.Camera();
 		scene.add(camera);
 
+		var light = new THREE.AmbientLight(0xffffff);
+		scene.add(light);
+
 		////////////////////////////////////////////////////////////////////////////////
 		//          handle arToolkitSource
 		////////////////////////////////////////////////////////////////////////////////
 
 		var arToolkitSource = new THREEx.ArToolkitSource({
-			// to read from the webcam
 			sourceType: 'webcam',
-
-			// // to read from an image
-			// sourceType : 'image',
-			// sourceUrl : THREEx.ArToolkitContext.baseURL + '../data/images/img.jpg',
-
-			// to read from a video
-			// sourceType : 'video',
-			// sourceUrl : THREEx.ArToolkitContext.baseURL + '../data/videos/headtracking.mp4',
+			sourceWidth: 480,
+			sourceHeight: 640,
 		})
 
 		arToolkitSource.init(function onReady() {
-			setTimeout(() => {
+			// use a resize to fullscreen mobile devices
+			setTimeout(function () {
 				onResize()
-			}, 2000);
+			}, 1000);
 		})
 
 		// handle resize
 		window.addEventListener('resize', function () {
 			onResize()
+		})
+
+		// listener for end loading of NFT marker
+		window.addEventListener('arjs-nft-loaded', function (ev) {
+			console.log(ev);
 		})
 
 		function onResize() {
@@ -75,30 +80,25 @@ const Cube = () => {
 				arToolkitSource.copyElementSizeTo(arToolkitContext.arController.canvas)
 			}
 		}
+
 		////////////////////////////////////////////////////////////////////////////////
 		//          initialize arToolkitContext
 		////////////////////////////////////////////////////////////////////////////////
 
-
 		// create atToolkitContext
 		var arToolkitContext = new THREEx.ArToolkitContext({
-			cameraParametersUrl: THREEx.ArToolkitContext.baseURL + '../data/data/camera_para.dat',
 			detectionMode: 'mono',
+			canvasWidth: 480,
+			canvasHeight: 640,
+		}, {
+			sourceWidth: 480,
+			sourceHeight: 640,
 		})
+
 		// initialize it
 		arToolkitContext.init(function onCompleted() {
 			// copy projection matrix to camera
 			camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
-		})
-
-		// update artoolkit on every frame
-		onRenderFcts.push(function () {
-			if (arToolkitSource.ready === false) return
-
-			arToolkitContext.update(arToolkitSource.domElement)
-
-			// update scene.visible if the marker is seen
-			scene.visible = camera.visible
 		})
 
 		////////////////////////////////////////////////////////////////////////////////
@@ -106,72 +106,79 @@ const Cube = () => {
 		////////////////////////////////////////////////////////////////////////////////
 
 		// init controls for camera
+		debugger
 		var markerControls = new THREEx.ArMarkerControls(arToolkitContext, camera, {
-			type: 'pattern',
-			patternUrl: 'https://alexatestbucketguru.s3.amazonaws.com/pattern-frog.patt',
-			// patternUrl : THREEx.ArToolkitContext.baseURL + '../data/data/patt.kanji',
-			// as we controls the camera, set changeMatrixMode: 'cameraTransformMatrix'
+			type: 'nft',
+			descriptorsUrl: './resources/trex',
 			changeMatrixMode: 'cameraTransformMatrix'
 		})
-		// as we do changeMatrixMode: 'cameraTransformMatrix', start with invisible scene
+
 		scene.visible = false
+
+		var root = new THREE.Object3D();
+		scene.add(root);
 
 		//////////////////////////////////////////////////////////////////////////////////
 		//		add an object in the scene
 		//////////////////////////////////////////////////////////////////////////////////
+		debugger
+		var threeGLTFLoader = new THREE.GLTFLoader();
+		var model;
 
-		// add a torus knot
-		var geometry = new THREE.CubeGeometry(1, 1, 1);
-		var material = new THREE.MeshNormalMaterial({
-			transparent: true,
-			opacity: 0.5,
-			side: THREE.DoubleSide
-		});
-		var mesh = new THREE.Mesh(geometry, material);
-		mesh.position.y = geometry.parameters.height / 2
-		scene.add(mesh);
+		threeGLTFLoader.load("./resources/Flamingo.glb", function (gltf) {
+			model = gltf.scene.children[0];
+			model.name = 'Flamingo';
 
-		var geometry = new THREE.TorusKnotGeometry(0.3, 0.1, 64, 16);
-		var material = new THREE.MeshNormalMaterial();
-		var mesh = new THREE.Mesh(geometry, material);
-		mesh.position.y = 0.5
-		scene.add(mesh);
+			var animation = gltf.animations[0];
+			var mixer = new THREE.AnimationMixer(model);
+			mixers.push(mixer);
+			var action = mixer.clipAction(animation);
+			action.play();
 
-		onRenderFcts.push(function (delta) {
-			mesh.rotation.x += Math.PI * delta
-		})
+			root.matrixAutoUpdate = false;
+			root.add(model);
 
-		//////////////////////////////////////////////////////////////////////////////////
-		//		render the whole thing on the page
-		//////////////////////////////////////////////////////////////////////////////////
+			model.position.z = -200;
+			model.position.x = 100;
+			model.position.y = 100;
 
-		// render the scene
-		onRenderFcts.push(function () {
-			renderer.render(scene, camera);
-		})
 
-		// run the rendering loop
-		var lastTimeMsec = null
-		requestAnimationFrame(function animate(nowMsec) {
-			// keep looping
+			//////////////////////////////////////////////////////////////////////////////////
+			//		render the whole thing on the page
+			//////////////////////////////////////////////////////////////////////////////////
+
+			var animate = function () {
+				requestAnimationFrame(animate);
+
+				if (mixers.length > 0) {
+					for (var i = 0; i < mixers.length; i++) {
+						mixers[i].update(clock.getDelta());
+					}
+				}
+
+				if (!arToolkitSource.ready) {
+					return;
+				}
+
+				arToolkitContext.update(arToolkitSource.domElement)
+
+				// update scene.visible if the marker is seen
+				scene.visible = camera.visible;
+
+				renderer.render(scene, camera);
+			};
+
 			requestAnimationFrame(animate);
-			// measure time
-			lastTimeMsec = lastTimeMsec || nowMsec - 1000 / 60
-			var deltaMsec = Math.min(200, nowMsec - lastTimeMsec)
-			lastTimeMsec = nowMsec
-			// call each update function
-			onRenderFcts.forEach(function (onRenderFct) {
-				onRenderFct(deltaMsec / 1000, nowMsec / 1000)
-			})
 		})
 	}
-	return (
-		<div style={{ position: 'absolute', color: 'white' }
-		}>
-			<h1 style={{ fontSize: 124 }}>Hello</h1>
-			<h2 style={{ fontSize: 69 }}>CUbe own world.</h2>
-		</div >
-	)
+	// return (
+	// 	<div style={{ position: 'absolute', color: 'white' }
+	// 	}>
+	// 		<h1 style={{ fontSize: 124 }}>Hello</h1>
+	// 		<h2 style={{ fontSize: 69 }}>CUbe own world.</h2>
+	// 	</div >
+	// )
+	return (<></>)
 }
 
 

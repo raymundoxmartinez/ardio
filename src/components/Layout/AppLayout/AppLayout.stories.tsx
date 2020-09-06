@@ -1,0 +1,16 @@
+import * as React from "react"
+import { storiesOf } from "@storybook/react"
+import AppLayout from "./AppLayout"
+import readme from "./docs.md"
+
+storiesOf("AppLayout", module)
+  .addParameters({
+    readme: { content: readme },
+  })
+  .add("AppLayout", () => {
+    return (
+      <AppLayout>
+        <div>HELLO TEST</div>
+      </AppLayout>
+    )
+  })

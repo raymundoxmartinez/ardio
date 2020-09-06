@@ -1,12 +1,9 @@
 import * as React from 'react'
 import { storiesOf } from '@storybook/react'
-import {muiTheme} from 'storybook-addon-material-ui';
 import {{pascalCase name}} from './{{pascalCase name}}'
 import readme from './docs.md'
-import theme from '../../../theme/theme'
 
 storiesOf('{{pascalCase name}}', module)
-.addDecorator(muiTheme(theme))
 .addParameters({
 readme: { content: readme }
 })

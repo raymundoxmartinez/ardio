@@ -97,3 +97,15 @@ Looking for more guidance? Full documentation for Gatsby lives [on the website](
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/gatsbyjs/gatsby-starter-hello-world)
 
 <!-- AUTO-GENERATED-CONTENT:END -->
+
+The architecture
+Redux,
+atomic component design
+
+-Each template takes in certain data through props passed down through the pages component
+
+-Pages are connected to redux and pass down data to templates through props
+
+-all/most components are meant to be presentational components where pages are meant to hold state.
+
+-Ask how to use shared state with redux slices

@@ -1,28 +1,36 @@
 {
-    "include": ["src/**/*"],
-    "exclude": ["node_modules", "build"],
-    "compilerOptions": {
-      "allowJs": false,
-      "allowSyntheticDefaultImports": true,
-      "baseUrl": "src",
-      "composite": true,
-      "declaration": true,
-      "esModuleInterop": true,
-      "jsx": "react",
-      "lib": ["es5", "es6", "es7", "es2017", "dom"],
-      "module": "commonjs",
-      "moduleResolution": "node",
-      "noImplicitAny": true,
-      "noImplicitReturns": true,
-      "noImplicitThis": true,
-      "resolveJsonModule": true,
-      "rootDirs": ["src"],
-      "skipLibCheck": true,
-      "sourceMap": true,
-      "strict": true,
-      "strictNullChecks": true,
-      "target": "es5"
-    },
-   
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "build"],
+  "compilerOptions": {
+    "allowJs": false,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "src",
+    "composite": true,
+    "declaration": true,
+    "esModuleInterop": true,
+    "jsx": "react",
+    "lib": ["es5", "es6", "es7", "es2017", "dom"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "resolveJsonModule": true,
+    "rootDirs": ["src"],
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "target": "es5",
+    "paths": {
+      "@src/*": ["./"],
+      "@components/*": ["components/*"],
+      "@atoms/*": ["components/atoms/*"],
+      "@molecules/*": ["components/molecules/*"],
+      "@templates/*": ["components/templates/*"],
+      "@forms/*": ["components/forms/*"],
+      "@pages/*": ["components/pages/*"],
+      "@theme/*": ["theme/*"]
+    }
   }
-  
+}

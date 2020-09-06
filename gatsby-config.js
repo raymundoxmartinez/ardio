@@ -3,6 +3,7 @@
  *
  * See: https://www.gatsbyjs.org/docs/gatsby-config/
  */
+const path = require('path')
 
 module.exports = {
   /* Your site config here */
@@ -33,19 +34,21 @@ module.exports = {
   plugins: [
     'gatsby-plugin-react-helmet',
     {
-      resolve: "gatsby-plugin-load-script",
-      options: {
-        src: "js/three.js",
-      },
-    },
-    {
-      resolve: "gatsby-plugin-load-script",
-      options: {
-        src: "https://raw.githack.com/AR-js-org/AR.js/master/three.js/build/ar-nft.js",
-      },
-    },
-    {
       resolve: `gatsby-plugin-create-client-paths`,
       options: { prefixes: [`/app/*`] }
-    }],
+    },
+    {
+      resolve: 'gatsby-plugin-root-import',
+      options: {
+        '@src': path.join(__dirname, 'src'),
+        '@components': path.join(__dirname, 'src/components'),
+        '@atoms': path.join(__dirname, 'src/components/atoms'),
+        '@molecules': path.join(__dirname, 'src/components/molecules'),
+        '@templates': path.join(__dirname, 'src/components/templates'),
+        '@forms': path.join(__dirname, 'src/components/forms'),
+        '@pages': path.join(__dirname, 'src/components/pages'),
+        '@theme': path.join(__dirname, 'src/theme'),
+      },
+    }
+  ],
 }

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import * as THREE from 'three';
+import { Button } from '@material-ui/core';
 
 
 
@@ -9,10 +10,13 @@ const Globe = () => {
         animate();
     }, [])
     return (
-        <div style={{ position: 'absolute', color: 'white' }
+        <div style={{ position: 'absolute', color: 'white', height: '100%', width: '100%' }
         }>
-            <h1 style={{ fontSize: 124 }}>ARverse</h1>
-            <h2 style={{ fontSize: 69 }}>Create your own world.</h2>
+            <h1 style={{ fontSize: 124, marginBottom: 0 }}>ARverse</h1>
+            <h2 style={{ fontSize: 37, marginTop: 0 }}>Create your own world.</h2>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '30%' }}>
+                <Button size="large" style={{   backgroundColor: '#CBBED6' }}>enter</Button>
+            </div>
         </div >
     )
 }

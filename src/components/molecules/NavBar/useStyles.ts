@@ -1,21 +1,33 @@
-import makeStyles from '@material-ui/core/styles/makeStyles'
+import makeStyles from "@material-ui/core/styles/makeStyles"
+const drawerWidth = 240
 const useStyles = makeStyles((theme: any) => {
-    return {
-        root: {
-            flexGrow: 1,
-            position: 'absolute'
-        },
-        appBar: {
-            backgroundColor: 'transparent',
-            color: 'white'
-        },
-        toolBar: {
-            backgroundColor: 'transparent',
-            color: 'white',
-            display:'flex',
-            justifyContent:'flex-end'
-        },
-    }
+  return {
+    appBar: {
+      backgroundColor: "transparent",
+      transition: theme.transitions.create(["margin", "width"], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+    },
+    appBarShift: {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth,
+      transition: theme.transitions.create(["margin", "width"], {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+    },
+    toolBar: {
+      backgroundColor: "transparent",
+      color: "black",
+    },
+    menuButton: {
+      marginRight: theme.spacing(2),
+    },
+    hide: {
+      display: "none",
+    },
+  }
 })
 
 export default useStyles
