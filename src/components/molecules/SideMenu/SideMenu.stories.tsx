@@ -6,6 +6,9 @@ import readme from "./docs.md"
 storiesOf("SideMenu", module)
   .addParameters({
     readme: { content: readme },
+    options: {
+      theme: {},
+    },
   })
   .add("SideMenu", () => {
     return (

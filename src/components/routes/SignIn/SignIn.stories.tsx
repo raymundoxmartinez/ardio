@@ -1,17 +1,17 @@
 import * as React from 'react'
 import { storiesOf } from '@storybook/react'
-import {{pascalCase name}} from './{{pascalCase name}}'
+import SignIn from './SignIn'
 import readme from './docs.md'
 
-storiesOf('{{pascalCase name}}', module)
+storiesOf('SignIn', module)
 .addParameters({
 readme: { content: readme },
 options:{
 theme:{}
 }
 })
-.add('{{pascalCase name}}', () => {
+.add('SignIn', () => {
 return (
-<{{pascalCase name}} />
+<SignIn />
 )
 })

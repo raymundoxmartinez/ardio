@@ -29,7 +29,7 @@
       "@molecules/*": ["components/molecules/*"],
       "@templates/*": ["components/templates/*"],
       "@forms/*": ["components/forms/*"],
-      "@pages/*": ["components/pages/*"],
+      "@routes/*": ["components/routes/*"],
       "@theme/*": ["theme/*"]
     }
   }

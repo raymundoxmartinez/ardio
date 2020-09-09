@@ -46,7 +46,7 @@ module.exports = {
         '@molecules': path.join(__dirname, 'src/components/molecules'),
         '@templates': path.join(__dirname, 'src/components/templates'),
         '@forms': path.join(__dirname, 'src/components/forms'),
-        '@pages': path.join(__dirname, 'src/components/pages'),
+        '@routes': path.join(__dirname, 'src/components/routes'),
         '@theme': path.join(__dirname, 'src/theme'),
       },
     }

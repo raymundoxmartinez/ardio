@@ -20,6 +20,9 @@ const newTheme = {
 storiesOf("Profile", module)
   .addParameters({
     readme: { content: readme },
+    options: {
+      theme: {},
+    },
   })
   .add("Profile", () => {
     return <Profile />

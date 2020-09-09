@@ -1,7 +1,8 @@
+import { createMuiTheme } from "@material-ui/core/styles"
+
 // Add some custom theme stuff if needed
 
-const defaultTheme = {
-  themeName: "Grey Theme",
+export default createMuiTheme({
   typography: {
     fontFamily: [
       '"Segoe UI Symbo l"',
@@ -24,6 +25,4 @@ const defaultTheme = {
       main: "#65E8A1",
     },
   },
-}
-
-export default defaultTheme
+})

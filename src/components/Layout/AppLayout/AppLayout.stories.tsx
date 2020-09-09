@@ -6,6 +6,9 @@ import readme from "./docs.md"
 storiesOf("AppLayout", module)
   .addParameters({
     readme: { content: readme },
+    options: {
+      theme: {},
+    },
   })
   .add("AppLayout", () => {
     return (
