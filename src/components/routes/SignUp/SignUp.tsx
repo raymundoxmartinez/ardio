@@ -1,13 +1,11 @@
-import * as React from 'react'
+import * as React from "react"
 import { RouteComponentProps } from "@reach/router"
 
-import useStyles from './useStyles'
+import useStyles from "./useStyles"
 
-const SignUp =(props:RouteComponentProps)=>{
-const classes = useStyles()
-return (
-
-)
+const SignUp = (props: RouteComponentProps) => {
+  const classes = useStyles()
+  return <div></div>
 }
 
 export default SignUp

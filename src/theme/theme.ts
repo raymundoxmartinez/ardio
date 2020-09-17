@@ -18,11 +18,23 @@ export default createMuiTheme({
     ].join(","),
   },
   palette: {
+    text: {
+      primary: "#FFFFFF",
+      secondary: "#8B97AE",
+      disabled: "#707D96",
+    },
+    action: {
+      active: "#6781F7",
+    },
     primary: {
-      main: "#0082D2",
+      main: "#6E3DC8",
     },
     secondary: {
-      main: "#65E8A1",
+      main: "#6781F7",
+    },
+    background: {
+      default: "#192233",
+      paper: "#212C42",
     },
   },
 })

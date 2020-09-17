@@ -3,7 +3,6 @@ const drawerWidth = 240
 const useStyles = makeStyles((theme: any) => {
   return {
     appBar: {
-      backgroundColor: "transparent",
       transition: theme.transitions.create(["margin", "width"], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
@@ -18,8 +17,7 @@ const useStyles = makeStyles((theme: any) => {
       }),
     },
     toolBar: {
-      backgroundColor: "transparent",
-      color: "black",
+      color: "white",
     },
     menuButton: {
       marginRight: theme.spacing(2),

@@ -5,24 +5,24 @@ import { Router } from "@reach/router"
 import theme from "../theme/theme"
 import Layout from "@components/Layout/AppLayout"
 import Profile from "@routes/Profile"
+import Experience from "@routes/Experience"
 import SignIn from "@routes/SignIn"
 import SignUp from "@routes/SignUp"
 import { AuthProvider } from "../context/auth"
+import withLayout from "@components/Layout/withLayout"
 
+const ProfileWithLayout = withLayout(Layout)(Profile)
+const ExperienceLayout = withLayout(Layout)(Experience)
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <AuthProvider>
-        <Layout>
-          <Router basepath="/app">
-            {/* <SignUp path="/signup" /> */}
-            <Profile path="/profile" />
-          </Router>
-        </Layout>
         <Router basepath="/app">
           <SignIn path="/signIn" />
           {/* <SignUp path="/signup" /> */}
+          <ExperienceLayout path="/experience" />
+          <ProfileWithLayout path="/profile" />
         </Router>
       </AuthProvider>
     </ThemeProvider>
